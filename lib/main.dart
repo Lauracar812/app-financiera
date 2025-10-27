@@ -41,7 +41,7 @@ class FinancialApp extends StatelessWidget {
             color: Color(0xFF1E293B),
           ),
         ),
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           elevation: 0,
           color: Colors.white,
           surfaceTintColor: Colors.transparent,
