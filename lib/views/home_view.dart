@@ -9,6 +9,7 @@ import 'reports_view.dart';
 import 'travels_view.dart';
 import '../widgets/add_transaction_dialog.dart';
 import '../utils/currency_formatter.dart';
+import 'settings_view.dart';
 
 /// Vista principal que demuestra cómo los controladores mantienen el estado
 /// a través de múltiples pantallas y navegación
@@ -71,6 +72,11 @@ class _HomeViewState extends State<HomeView> {
                 transactionController: widget.transactionController,
                 categoryController: widget.categoryController,
                 budgetController: widget.budgetController,
+              ),
+              SettingsView(
+                categoryController: widget.categoryController,
+                budgetController: widget.budgetController,
+                transactionController: widget.transactionController,
               ),
             ],
           );
@@ -166,6 +172,11 @@ class _HomeViewState extends State<HomeView> {
               icon: Icon(Icons.analytics_outlined),
               activeIcon: Icon(Icons.analytics),
               label: 'Reportes',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings_outlined),
+              activeIcon: Icon(Icons.settings),
+              label: 'Configuración',
             ),
           ],
         ),

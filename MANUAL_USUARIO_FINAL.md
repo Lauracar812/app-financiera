@@ -1,7 +1,7 @@
 # 📱 MANUAL DE USUARIO - APLICACIÓN FINANCIERA
 
 **MANUAL DEL USUARIO FINAL**  
-**Versión 1.0 - Octubre 2025**  
+**Versión 2.0 - Octubre 2025**  
 **Autor: Laura Marcela Cardona Rojas**
 
 ---
@@ -15,9 +15,10 @@
 5. [ADMINISTRACIÓN DE CATEGORÍAS](#5-administración-de-categorías)
 6. [CONTROL DE PRESUPUESTOS](#6-control-de-presupuestos)
 7. [REPORTES Y ESTADÍSTICAS](#7-reportes-y-estadísticas)
-8. [TIPS Y MEJORES PRÁCTICAS](#8-tips-y-mejores-prácticas)
-9. [SOLUCIÓN DE PROBLEMAS](#9-solución-de-problemas)
-10. [PREGUNTAS FRECUENTES](#10-preguntas-frecuentes)
+8. [⭐ CONFIGURACIÓN AVANZADA](#8-configuración-avanzada)
+9. [TIPS Y MEJORES PRÁCTICAS](#9-tips-y-mejores-prácticas)
+10. [SOLUCIÓN DE PROBLEMAS](#10-solución-de-problemas)
+11. [PREGUNTAS FRECUENTES](#11-preguntas-frecuentes)
 
 ---
 
@@ -39,7 +40,7 @@ Esta aplicación es perfecta para:
 - **Familias** que desean planificar mejor su presupuesto
 - **Cualquier persona** interesada en mejorar su salud financiera
 
-### 1.3 Características Principales
+### 1.3 Características Principales V2.0
 ✅ **Registro fácil** de ingresos y gastos  
 ✅ **Categorización automática** de transacciones  
 ✅ **Presupuestos inteligentes** con alertas  
@@ -47,6 +48,13 @@ Esta aplicación es perfecta para:
 ✅ **Cálculos automáticos** de balances  
 ✅ **Interfaz intuitiva** y fácil de usar  
 ✅ **Formato de moneda colombiana** (COP)  
+⭐ **Campos de texto mejorados** con animaciones y validación visual  
+⭐ **Formateo automático** de cantidades monetarias  
+⭐ **Vista de configuración avanzada** con perfil personal y preferencias  
+⭐ **Sistema de búsqueda** inteligente con filtros  
+⭐ **Gestión de metas financieras** con etiquetas interactivas  
+⭐ **Indicadores de progreso** animados para ahorros  
+⭐ **Navegación expandida** con 5 secciones principales  
 
 ---
 
@@ -68,12 +76,13 @@ Esta aplicación es perfecta para:
 
 ### 2.2 Navegación Básica
 
-La aplicación tiene **4 secciones principales**:
+La aplicación tiene **5 secciones principales**:
 
 📊 **DASHBOARD** - Resumen general de tu situación financiera  
 💰 **TRANSACCIONES** - Registro y gestión de ingresos/gastos  
 💳 **PRESUPUESTOS** - Control y planificación de gastos  
 📈 **REPORTES** - Análisis y estadísticas de tus finanzas  
+⚙️ **⭐ CONFIGURACIÓN** - Perfil personal, preferencias y configuración avanzada  
 
 **Navegación:**
 - Usa la **barra inferior** para cambiar entre secciones
@@ -439,9 +448,196 @@ Los reportes te permiten:
 
 ---
 
-## 8. TIPS Y MEJORES PRÁCTICAS
+## 8. ⭐ CONFIGURACIÓN AVANZADA
 
-### 8.1 Consejos para el Registro Diario
+### 8.1 Acceso a Configuración
+
+**UBICACIÓN:**
+- Ve a la sección **"CONFIGURACIÓN"** (última pestaña en la barra inferior)
+- Ícono: ⚙️ Engranaje
+- **Nueva funcionalidad** en la versión 2.0
+
+### 8.2 Sección Personal - Gestión de tu Perfil
+
+La sección Personal te permite gestionar tu información básica y personalizar tu experiencia:
+
+**📱 AVATAR Y PERFIL:**
+- **Foto de perfil**: Toca el círculo para cambiar tu avatar
+- **Estado Premium**: Se muestra tu nivel de usuario
+- **Información actualizable** en tiempo real
+
+**📝 INFORMACIÓN PERSONAL:**
+
+**Nombre Completo:**
+- **Campo mejorado** con validación en tiempo real
+- **Animaciones suaves** al enfocar/desenfocar
+- **Validación**: No puede estar vacío
+- **Se actualiza** automáticamente en toda la app
+
+**Correo Electrónico:**
+- **Formateo automático** y validación de formato
+- **Colores dinámicos**: Verde si es válido, rojo si es inválido
+- **Ejemplo de formato**: usuario@ejemplo.com
+- **Requisito**: Debe ser un email válido
+
+**Teléfono:**
+- **Formato colombiano** sugerido: +57 300 123 4567
+- **Validación en tiempo real**
+- **Campo opcional** pero recomendado
+
+**💾 GUARDAR CAMBIOS:**
+- **Botón con gradiente** azul-morado
+- **Estado de carga** animado durante el guardado
+- **Confirmación visual** cuando se guarda exitosamente
+
+### 8.3 Sección Financiero - Control de Límites y Metas
+
+**📊 ESTADÍSTICAS RÁPIDAS:**
+- **Cards animadas** con información clave:
+  - **Gastado Este Mes**: Con tendencia vs mes anterior
+  - **Ahorrado**: Progreso hacia tu meta
+- **Animaciones de entrada** al cargar la sección
+
+**💰 LÍMITES Y METAS:**
+
+**Límite de Presupuesto Mensual:**
+- **Campo especializado** para cantidades monetarias
+- **Formateo automático**: Escribe 2000000, se muestra como COP $2.000.000
+- **Validación**: Solo acepta números positivos
+- **Sugerencia**: Usa la regla 50/30/20 (50% necesidades, 30% gustos, 20% ahorros)
+
+**Meta de Ahorro:**
+- **Similar al presupuesto** pero para ahorros
+- **Se integra** con el indicador de progreso
+- **Recomendación**: Entre 10-20% de tus ingresos mensuales
+
+**📈 INDICADOR DE PROGRESO DE AHORROS:**
+- **Círculo animado** que muestra tu avance
+- **Porcentaje dinámico** que se actualiza en tiempo real
+- **Colores**: Verde para progreso saludable
+- **Información mostrada**:
+  - Cantidad ahorrada actual
+  - Meta establecida
+  - Porcentaje completado
+
+**🏷️ SISTEMA DE METAS FINANCIERAS:**
+- **Etiquetas interactivas** para organizar tus objetivos
+- **Agregar metas**: Escribe y presiona Enter
+- **Eliminar metas**: Toca la X en cada etiqueta
+- **Ejemplos**: "Ahorrar para vacaciones", "Fondo de emergencia", "Nuevo carro"
+- **Límite recomendado**: 3-5 metas simultáneas
+
+**⚡ ACCIONES RÁPIDAS:**
+- **Guardar Límites**: Botón principal para confirmar cambios
+- **Resetear**: Limpia todos los campos (con confirmación)
+
+### 8.4 Sección Preferencias - Configuración de la App
+
+**🔍 BÚSQUEDA DE CONFIGURACIONES:**
+- **Campo de búsqueda animado** en la parte superior
+- **Busca en tiempo real** entre todas las configuraciones
+- **Botón de limpiar** aparece automáticamente
+- **Útil cuando** tienes muchas configuraciones
+
+**💱 CONFIGURACIÓN DE MONEDA:**
+- **Selector desplegable** con opciones:
+  - COP (Peso Colombiano) - Por defecto
+  - USD (Dólar Americano)
+  - EUR (Euro)
+- **Cambio global**: Afecta toda la aplicación
+- **Formateo automático** según la moneda seleccionada
+
+**🔔 NOTIFICACIONES PUSH:**
+- **Switch animado** para activar/desactivar
+- **Funciones**:
+  - Alertas cuando excedes presupuestos
+  - Recordatorios para registrar gastos
+  - Notificaciones de metas alcanzadas
+- **Estado por defecto**: Activado
+
+**🌙 MODO OSCURO:**
+- **Switch para tema** claro/oscuro
+- **Estado actual**: En desarrollo
+- **Preparado para** futuras actualizaciones de tema
+
+**📤 ACCIONES RÁPIDAS:**
+
+**Exportar Datos:**
+- **Botón verde** con ícono de descarga
+- **Funcionalidad**: En desarrollo
+- **Formatos planeados**: PDF, CSV, Excel
+
+**Crear Respaldo:**
+- **Botón amarillo** con ícono de backup
+- **Funcionalidad**: En desarrollo
+- **Incluirá**: Transacciones, presupuestos, configuraciones
+
+### 8.5 Navegación entre Secciones
+
+**🔄 PESTAÑAS ANIMADAS:**
+- **Diseño moderno** con transiciones suaves
+- **3 pestañas**: Personal, Financiero, Preferencias
+- **Indicador visual**: La pestaña activa se resalta
+- **Navegación táctil**: Toca cualquier pestaña para cambiar
+
+**💾 GUARDADO AUTOMÁTICO:**
+- **La mayoría de configuraciones** se guardan automáticamente
+- **Campos de texto**: Requieren botón "Guardar" para confirmar
+- **Switches y dropdowns**: Se guardan al cambiar
+
+### 8.6 Tips para Configuración Efectiva
+
+**🎯 CONFIGURACIÓN INICIAL RECOMENDADA:**
+1. **Completa tu perfil personal** con información real
+2. **Establece un presupuesto mensual** realista (revisa 2-3 meses de gastos)
+3. **Define una meta de ahorro** alcanzable (10-15% de ingresos)
+4. **Crea 3-5 metas financieras** específicas y con fechas
+5. **Activa notificaciones** para mejor control
+
+**📊 USO DEL INDICADOR DE PROGRESO:**
+- **Verde (0-70%)**: Vas bien, mantén el ritmo
+- **Amarillo (70-90%)**: Muy cerca, un esfuerzo más
+- **Verde intenso (90%+)**: ¡Excelente! Meta casi alcanzada
+
+**🏷️ GESTIÓN DE METAS EFECTIVA:**
+- **Sé específico**: "Ahorrar $2.000.000 para vacaciones en diciembre"
+- **Fechas realistas**: No pongas metas inalcanzables
+- **Revisa mensualmente**: Ajusta metas según progreso
+- **Celebra logros**: Elimina metas completadas y crea nuevas
+
+---
+
+## 9. TIPS Y MEJORES PRÁCTICAS
+
+### 9.1 Consejos para el Registro Diario V2.0
+
+**🔄 HAZ DEL REGISTRO UN HÁBITO:**
+- **Registra transacciones** inmediatamente después de hacerlas
+- **Usa los campos mejorados** para una experiencia más fluida
+- **Aprovecha el formateo automático** de cantidades
+- **Dedica 5 minutos** al final del día para completar registros
+
+**📝 USA LOS NUEVOS CAMPOS DE TEXTO:**
+- **Campo de moneda especializado**: Solo escribe números, el formato se aplica automáticamente
+- **Validación visual**: Los campos te muestran errores en tiempo real
+- **Animaciones de foco**: Los campos se resaltan cuando los seleccionas
+- **Mejor experiencia**: Campos más grandes y fáciles de usar
+
+### 9.2 Aprovecha la Nueva Vista de Configuración
+
+**⚙️ REVISIÓN SEMANAL:**
+- **Cada domingo**: Ve a Configuración → Financiero
+- **Revisa tu progreso** en el indicador circular de ahorros
+- **Ajusta metas** según tu desempeño de la semana
+- **Actualiza límites** si es necesario
+
+**📊 ANÁLISIS MENSUAL:**
+- **Revisa todas las secciones** de configuración
+- **Personal**: Actualiza información si cambió algo
+- **Financiero**: Ajusta presupuestos según nuevos ingresos/gastos
+- **Preferencias**: Personaliza según tus necesidades actuales
+
+### 9.3 Consejos para el Registro Diario Original
 
 **🔄 HAZ DEL REGISTRO UN HÁBITO:**
 - **Registra transacciones** inmediatamente después de hacerlas
@@ -454,7 +650,7 @@ Los reportes te permiten:
 - **Evita**: "Comida", "Gasto", "Cosa"
 - **Incluye el lugar** si es relevante: "Almuerzo McDonald's"
 
-### 8.2 Organización de Categorías
+### 9.4 Organización de Categorías
 
 **🎯 USA CATEGORÍAS ESPECÍFICAS:**
 - **Mejor**: "Restaurantes", "Mercado", "Snacks"
@@ -467,7 +663,7 @@ Los reportes te permiten:
 - **Verde**: Gastos de salud/necesidades básicas
 - **Azul**: Transporte y movilidad
 
-### 8.3 Configuración de Presupuestos Efectivos
+### 9.5 Configuración de Presupuestos Efectivos
 
 **💡 REGLA 50/30/20:**
 - **50%** para necesidades (alimentación, transporte, servicios)
@@ -485,7 +681,7 @@ Los reportes te permiten:
 - **Mejor poco presupuesto** que nada
 - **Considera gastos estacionales** (diciembre, vacaciones)
 
-### 8.4 Uso de Reportes para Tomar Decisiones
+### 9.6 Uso de Reportes para Tomar Decisiones
 
 **🔍 ANÁLISIS SEMANAL:**
 - **Cada domingo**: Revisa la semana
@@ -498,7 +694,7 @@ Los reportes te permiten:
 - **Identifica** áreas de mejora
 - **Establece metas** para el siguiente mes
 
-### 8.5 Mantenimiento de la Aplicación
+### 9.7 Mantenimiento de la Aplicación
 
 **🔄 LIMPIEZA REGULAR:**
 - **Revisa categorías** y elimina las que no uses
@@ -512,9 +708,39 @@ Los reportes te permiten:
 
 ---
 
-## 9. SOLUCIÓN DE PROBLEMAS
+### 10.4 Cuándo Contactar Soporte
 
-### 9.1 Problemas Comunes y Soluciones
+### 10.1 Problemas Comunes V2.0 y Soluciones
+
+**❌ PROBLEMA**: "Los campos de texto no se ven bien o no animan"  
+**✅ SOLUCIÓN:**
+1. **Asegúrate** de estar usando la versión 2.0 actualizada
+2. **Reinicia** la aplicación completamente
+3. **Los campos mejoran** automáticamente la experiencia visual
+4. **Si persiste**, el dispositivo puede necesitar más memoria RAM
+
+**❌ PROBLEMA**: "No encuentro la vista de Configuración"  
+**✅ SOLUCIÓN:**
+1. **Mira la barra inferior** - debe haber 5 íconos (no 4)
+2. **El ícono de configuración** es un engranaje ⚙️ al final
+3. **Si solo ves 4 íconos**, necesitas actualizar a la versión 2.0
+4. **Actualiza la app** desde donde la descargaste
+
+**❌ PROBLEMA**: "El formateo de moneda no funciona correctamente"  
+**✅ SOLUCIÓN:**
+1. **En campos de moneda**: Solo escribe números (ejemplo: 50000)
+2. **El formato COP $50.000** aparece automáticamente
+3. **No agregues** puntos, comas o símbolos manualmente
+4. **Si no formatea**, toca fuera del campo y vuelve a tocar
+
+**❌ PROBLEMA**: "Las animaciones van muy lentas o no se ven"  
+**✅ SOLUCIÓN:**
+1. **Cierra otras aplicaciones** que consuman memoria
+2. **Las animaciones** están optimizadas para ser sutiles
+3. **En dispositivos antiguos** pueden ser menos notorias
+4. **Reinicia** el dispositivo si el problema persiste
+
+### 10.2 Problemas Comunes Originales y Soluciones
 
 **❌ PROBLEMA**: "No puedo agregar una transacción"  
 **✅ SOLUCIÓN:**
@@ -572,9 +798,26 @@ Los reportes te permiten:
 
 ---
 
-## 10. PREGUNTAS FRECUENTES
+## 11. PREGUNTAS FRECUENTES
 
-### 10.1 Sobre el Uso General
+### 11.1 Sobre las Nuevas Características V2.0
+
+**❓ ¿Cómo accedo a las nuevas funciones de la versión 2.0?**  
+📱 **Respuesta**: Busca el ícono de configuración ⚙️ en la barra inferior (quinta pestaña). Todas las nuevas funciones están ahí o integradas en las vistas existentes.
+
+**❓ ¿Por qué los campos de texto se ven diferentes?**  
+✨ **Respuesta**: Los campos ahora tienen animaciones y validación visual mejorada. Esto es normal y mejora tu experiencia de usuario.
+
+**❓ ¿El formateo de moneda funciona en todos los campos?**  
+💰 **Respuesta**: Solo en campos específicos como "Cantidad" en transacciones y "Límites" en configuración. Los campos normales de texto no tienen formateo de moneda.
+
+**❓ ¿Puedo desactivar las animaciones si mi dispositivo es lento?**  
+⚡ **Respuesta**: Las animaciones están optimizadas y no se pueden desactivar actualmente. En dispositivos muy antiguos, pueden ser menos notorias automáticamente.
+
+**❓ ¿Las metas financieras afectan mis presupuestos?**  
+🎯 **Respuesta**: No, son independientes. Las metas son objetivos personales que defines en Configuración, los presupuestos son límites de gasto por categoría.
+
+### 11.2 Sobre el Uso General
 
 **❓ ¿Puedo usar la app en varios dispositivos?**  
 📱 **Respuesta**: Actualmente no hay sincronización entre dispositivos. Cada instalación mantiene sus propios datos.
@@ -588,7 +831,7 @@ Los reportes te permiten:
 **❓ ¿La app funciona sin internet?**  
 🌐 **Respuesta**: Sí, la app funciona completamente offline. No necesitas conexión a internet.
 
-### 10.2 Sobre Transacciones
+### 11.3 Sobre Transacciones
 
 **❓ ¿Puedo registrar transacciones de fechas anteriores?**  
 📅 **Respuesta**: Sí, al agregar una transacción puedes cambiar la fecha tocando el campo de fecha.
@@ -602,7 +845,7 @@ Los reportes te permiten:
 **❓ ¿Cómo manejo transferencias entre mis cuentas?**  
 💳 **Respuesta**: Registra como gasto en una categoría "Transferencias" y como ingreso en la misma categoría.
 
-### 10.3 Sobre Categorías
+### 11.4 Sobre Categorías
 
 **❓ ¿Puedo cambiar el color o ícono de categorías existentes?**  
 🎨 **Respuesta**: No directamente en la app. Esta funcionalidad está en desarrollo.
@@ -613,7 +856,7 @@ Los reportes te permiten:
 **❓ ¿Hay límite en el número de categorías?**  
 📋 **Respuesta**: No hay límite, pero se recomienda mantener entre 8-15 para facilitar el uso.
 
-### 10.4 Sobre Presupuestos
+### 11.5 Sobre Presupuestos
 
 **❓ ¿Los presupuestos se reinician automáticamente cada mes?**  
 📅 **Respuesta**: Sí, los cálculos de gasto se reinician automáticamente cada mes.
@@ -624,7 +867,7 @@ Los reportes te permiten:
 **❓ ¿Qué pasa si excedo mi presupuesto?**  
 ⚠️ **Respuesta**: Solo recibes una alerta visual. La app no bloquea gastos adicionales.
 
-### 10.5 Sobre Reportes
+### 11.6 Sobre Reportes
 
 **❓ ¿Puedo ver reportes de meses anteriores?**  
 📈 **Respuesta**: Los reportes muestran todas las transacciones registradas, incluyendo meses anteriores.
@@ -635,7 +878,27 @@ Los reportes te permiten:
 **❓ ¿Puedo filtrar reportes por fecha específica?**  
 📅 **Respuesta**: Esta funcionalidad está en desarrollo. Actualmente muestran todos los datos.
 
-### 10.6 Consejos Adicionales
+### 11.7 Consejos Adicionales V2.0
+
+**💡 ¿Cómo aprovechar al máximo la nueva vista de Configuración?**
+1. **Dedica 10 minutos iniciales** a completar tu perfil
+2. **Establece metas realistas** en la sección Financiero
+3. **Revisa el progreso semanalmente** usando el indicador circular
+4. **Personaliza las preferencias** según tus necesidades
+
+**💡 ¿Con qué frecuencia debo usar las nuevas funciones?**
+- **Configuración Personal**: Al inicio y cuando cambie información
+- **Metas Financieras**: Revisión semanal del progreso
+- **Búsqueda**: Cuando tengas muchas transacciones y necesites encontrar algo específico
+- **Límites**: Ajuste mensual según resultados
+
+**💡 ¿Cómo mantener la motivación con las nuevas herramientas?**
+- **Usa el indicador visual** de progreso para ver avances
+- **Celebra** cuando las animaciones muestren validación positiva (verde)
+- **Aprovecha** las metas por etiquetas para organizar objetivos
+- **Revisa** regularmente la sección de estadísticas rápidas
+
+### 11.8 Consejos Adicionales Originales
 
 **💡 ¿Cómo empezar si nunca he controlado mis finanzas?**
 1. **Comienza registrando** todo por una semana sin juzgar

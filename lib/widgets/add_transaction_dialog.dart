@@ -4,6 +4,8 @@ import '../controllers/transaction_controller.dart';
 import '../controllers/category_controller.dart';
 import '../controllers/budget_controller.dart';
 import '../models/transaction.dart';
+import 'custom_text_fields.dart';
+import 'custom_widgets.dart';
 
 /// Diálogo para agregar o editar transacciones.
 /// Demuestra cómo los widgets pueden interactuar con múltiples controladores
@@ -98,15 +100,12 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 _buildTypeSelector(),
                 const SizedBox(height: 16),
 
-                // Campo de título
-                TextFormField(
+                // Campo de título con widget personalizado
+                CustomTextField(
+                  label: 'Título',
+                  hint: 'Ej: Supermercado, Salario, etc.',
+                  prefixIcon: Icons.title,
                   controller: _titleController,
-                  decoration: const InputDecoration(
-                    labelText: 'Título',
-                    hintText: 'Ej: Supermercado, Salario, etc.',
-                    prefixIcon: Icon(Icons.title),
-                    border: OutlineInputBorder(),
-                  ),
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
                       return 'El título es requerido';
@@ -116,24 +115,11 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 ),
                 const SizedBox(height: 16),
 
-                // Campo de cantidad
-                TextFormField(
+                // Campo de cantidad con widget personalizado
+                CurrencyTextField(
+                  label: 'Cantidad',
+                  hint: '0.00',
                   controller: _amountController,
-                  decoration: const InputDecoration(
-                    labelText: 'Cantidad',
-                    hintText: '0',
-                    prefixText: 'COP \$ ',
-                    prefixIcon: Icon(Icons.attach_money),
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(
-                      RegExp(r'^\d+\.?\d{0,2}'),
-                    ),
-                  ],
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
                       return 'La cantidad es requerida';
@@ -155,15 +141,12 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
                 _buildDateSelector(),
                 const SizedBox(height: 16),
 
-                // Campo de descripción (opcional)
-                TextFormField(
+                // Campo de descripción (opcional) con widget personalizado
+                CustomTextField(
+                  label: 'Descripción (Opcional)',
+                  hint: 'Detalles adicionales...',
+                  prefixIcon: Icons.note,
                   controller: _descriptionController,
-                  decoration: const InputDecoration(
-                    labelText: 'Descripción (Opcional)',
-                    hintText: 'Detalles adicionales...',
-                    prefixIcon: Icon(Icons.note),
-                    border: OutlineInputBorder(),
-                  ),
                   maxLines: 2,
                 ),
               ],
@@ -172,20 +155,21 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
         ),
       ),
       actions: [
-        TextButton(
+        CustomButton(
+          text: 'Cancelar',
+          isOutlined: true,
           onPressed: _isLoading ? null : () => Navigator.of(context).pop(),
-          child: const Text('Cancelar'),
         ),
-        ElevatedButton(
+        const SizedBox(width: 8),
+        CustomButton(
+          text: _isEditing ? 'Actualizar' : 'Guardar',
+          icon: _isEditing ? Icons.update : Icons.save,
+          isLoading: _isLoading,
           onPressed: _isLoading ? null : _saveTransaction,
-          child:
-              _isLoading
-                  ? const SizedBox(
-                    width: 16,
-                    height: 16,
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  )
-                  : Text(_isEditing ? 'Actualizar' : 'Guardar'),
+          gradientColors: const [
+            Color(0xFF6366F1),
+            Color(0xFF8B5CF6),
+          ],
         ),
       ],
     );

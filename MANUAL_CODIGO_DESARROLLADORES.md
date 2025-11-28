@@ -1,7 +1,7 @@
 # 📋 MANUAL DE CÓDIGO - APLICACIÓN FINANCIERA FLUTTER
 
 **MANUAL TÉCNICO PARA DESARROLLADORES**  
-**Versión 1.0 - Octubre 2025**  
+**Versión 2.0 - Octubre 2025**  
 **Autor: Laura Marcela Cardona Rojas**
 
 ---
@@ -13,9 +13,10 @@
 3. [CONTROLADORES - FRAGMENTOS CLAVE](#3-controladores---fragmentos-clave)
 4. [MODELOS DE DATOS](#4-modelos-de-datos)
 5. [VISTAS Y WIDGETS](#5-vistas-y-widgets)
-6. [UTILIDADES Y FORMATEO](#6-utilidades-y-formateo)
-7. [PUNTOS CRÍTICOS PARA ACTUALIZACIONES](#7-puntos-críticos-para-actualizaciones)
-8. [GUÍA DE MANTENIMIENTO](#8-guía-de-mantenimiento)
+6. [WIDGETS PERSONALIZADOS Y ENTRADAS DE TEXTO](#6-widgets-personalizados-y-entradas-de-texto)
+7. [UTILIDADES Y FORMATEO](#7-utilidades-y-formateo)
+8. [PUNTOS CRÍTICOS PARA ACTUALIZACIONES](#8-puntos-críticos-para-actualizaciones)
+9. [GUÍA DE MANTENIMIENTO](#9-guía-de-mantenimiento)
 
 ---
 
@@ -37,7 +38,15 @@ lib/
 ├── controllers/          # Lógica de negocio y estado
 ├── models/              # Estructuras de datos
 ├── views/               # Interfaces de usuario
+│   ├── home_view.dart           # Dashboard principal (5 pestañas)
+│   ├── transactions_view.dart   # Gestión de transacciones
+│   ├── budgets_view.dart        # Control de presupuestos
+│   ├── reports_view.dart        # Reportes y estadísticas
+│   └── settings_view.dart       # ⭐ NUEVA: Configuración avanzada
 ├── widgets/             # Componentes reutilizables
+│   ├── add_transaction_dialog.dart  # Diálogo mejorado
+│   ├── custom_text_fields.dart     # ⭐ NUEVO: Campos de texto personalizados
+│   └── custom_widgets.dart          # ⭐ NUEVO: Widgets personalizados
 ├── utils/               # Utilidades
 └── main.dart           # Punto de entrada
 ```
@@ -363,7 +372,329 @@ Widget build(BuildContext context) {
 
 ---
 
-## 6. UTILIDADES Y FORMATEO
+## 6. WIDGETS PERSONALIZADOS Y ENTRADAS DE TEXTO
+
+### 6.1 Arquitectura de Componentes Personalizados
+
+La versión 2.0 introduce una **biblioteca completa de widgets personalizados** que mejoran significativamente la experiencia de usuario y establecen un sistema de diseño coherente.
+
+**Principios de Diseño:**
+- **Reutilización**: Componentes que se usan en múltiples pantallas
+- **Consistencia**: Diseño unificado en toda la aplicación
+- **Animaciones**: Transiciones suaves y feedback visual
+- **Accesibilidad**: Tamaños adecuados y contraste suficiente
+
+### 6.2 CustomTextField - Campo de Texto Avanzado
+
+**Estructura y Funcionamiento:**
+```dart
+class CustomTextField extends StatefulWidget {
+  final String label;
+  final TextEditingController controller;
+  final String? Function(String?)? validator;
+  // ... otros parámetros de configuración
+}
+
+class _CustomTextFieldState extends State<CustomTextField>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _borderAnimation;
+  late Animation<Color?> _colorAnimation;
+```
+
+**Explicación Crítica:**
+- **SingleTickerProviderStateMixin**: Permite animaciones de un solo ticker
+- **AnimationController**: Controla el estado de las animaciones
+- **Dos animaciones paralelas**: Una para el grosor del borde, otra para el color
+- **Estado interno**: Maneja focus, animaciones y validación visual
+
+**Sistema de Animaciones:**
+```dart
+_borderAnimation = Tween<double>(
+  begin: 1.0,    // Borde normal
+  end: 2.0,      // Borde enfocado (más grueso)
+).animate(CurvedAnimation(
+  parent: _animationController,
+  curve: Curves.easeInOut,  // Suavidad en la transición
+));
+
+_colorAnimation = ColorTween(
+  begin: Color(0xFFE2E8F0),  // Gris claro
+  end: Color(0xFF6366F1),    // Azul índigo
+).animate(_animationController);
+```
+
+**Explicación Crítica:**
+- **Tween**: Define el rango de la animación (inicio → fin)
+- **ColorTween**: Transición suave entre colores
+- **CurvedAnimation**: Aplicar curvas de animación para naturalidad
+- **Sincronización**: Ambas animaciones usan el mismo controlador
+
+**Gestión de Estados Visuales:**
+```dart
+void initState() {
+  _focusNode.addListener(() {
+    setState(() {
+      _isFocused = _focusNode.hasFocus;
+    });
+    
+    if (_isFocused) {
+      _animationController.forward();   // Activar animación
+    } else {
+      _animationController.reverse();   // Revertir animación
+    }
+  });
+}
+```
+
+**Explicación Crítica:**
+- **FocusNode.addListener()**: Detecta cambios de foco automáticamente
+- **forward()/reverse()**: Control bidireccional de animaciones
+- **setState()**: Actualiza el UI cuando cambia el estado de foco
+- **Cleanup automático**: Las animaciones se revierten al perder foco
+
+### 6.3 CurrencyTextField - Formateo de Moneda Especializado
+
+**Formateador Personalizado:**
+```dart
+class _CurrencyInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    String newText = newValue.text;
+    
+    // Filtrado de caracteres
+    newText = newText.replaceAll(RegExp(r'[^\d.]'), '');
+    
+    // Control de decimales
+    List<String> parts = newText.split('.');
+    if (parts.length > 2) {
+      newText = '${parts[0]}.${parts[1]}';
+    }
+    
+    // Límite de 2 decimales
+    if (parts.length == 2 && parts[1].length > 2) {
+      newText = '${parts[0]}.${parts[1].substring(0, 2)}';
+    }
+```
+
+**Explicación Crítica:**
+- **TextInputFormatter**: Intercepta y modifica la entrada del usuario
+- **RegExp filtering**: Solo permite números y punto decimal
+- **Split logic**: Maneja correctamente múltiples puntos decimales
+- **Substring limiting**: Fuerza exactamente 2 decimales máximo
+- **Tiempo real**: El formateo ocurre mientras el usuario escribe
+
+### 6.4 SearchTextField - Búsqueda con Animaciones
+
+**Animación de Entrada:**
+```dart
+class _SearchTextFieldState extends State<SearchTextField>
+    with SingleTickerProviderStateMixin {
+  
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    );
+    _scaleAnimation = Tween<double>(
+      begin: 0.8,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.elasticOut,  // Efecto de rebote suave
+    ));
+    
+    _animationController.forward();  // Auto-start
+  }
+```
+
+**Explicación Crítica:**
+- **Curves.elasticOut**: Proporciona efecto de "rebote" natural
+- **Auto-start**: La animación inicia automáticamente al crear el widget
+- **Scale animation**: El campo "aparece" creciendo desde 80% a 100%
+- **200ms duration**: Duración optimizada para percepción humana
+
+**Botón de Limpiar Dinámico:**
+```dart
+suffixIcon: widget.controller.text.isNotEmpty
+    ? IconButton(
+        icon: const Icon(Icons.clear),
+        onPressed: () {
+          widget.controller.clear();
+          if (widget.onClear != null) widget.onClear!();
+          if (widget.onChanged != null) widget.onChanged!('');
+        },
+      )
+    : null,
+```
+
+**Explicación Crítica:**
+- **Visibilidad condicional**: Solo aparece cuando hay texto
+- **Triple callback**: Limpia el controlador, ejecuta onClear y onChanged
+- **Consistencia**: Mantiene todos los listeners informados del cambio
+
+### 6.5 CustomCard - Cards Interactivas
+
+**Sistema de Feedback Táctil:**
+```dart
+class _CustomCardState extends State<CustomCard>
+    with SingleTickerProviderStateMixin {
+  
+  void _onTapDown() {
+    setState(() { _isPressed = true; });
+    _animationController.forward();
+  }
+
+  void _onTapUp() {
+    setState(() { _isPressed = false; });
+    _animationController.reverse();
+  }
+
+  void _onTapCancel() {
+    setState(() { _isPressed = false; });
+    _animationController.reverse();
+  }
+```
+
+**Explicación Crítica:**
+- **Tres estados de gestos**: TapDown, TapUp, TapCancel
+- **Estado visual**: _isPressed permite diferentes estilos visuales
+- **Animación bidirecional**: Forward en press, reverse en release
+- **Gestión completa**: Maneja casos edge como cancelación de tap
+
+**Elevación Dinámica:**
+```dart
+_elevationAnimation = Tween<double>(
+  begin: widget.showShadow ? 4.0 : 0.0,
+  end: widget.showShadow ? 8.0 : 0.0,
+).animate(CurvedAnimation(
+  parent: _animationController,
+  curve: Curves.easeInOut,
+));
+```
+
+**Explicación Crítica:**
+- **Elevación condicional**: Solo si showShadow está habilitado
+- **Doble altura**: La sombra se duplica al presionar
+- **Material Design**: Sigue principios de elevación de Material
+
+### 6.6 CustomButton - Botones con Estados Avanzados
+
+**Gestión de Estados de Carga:**
+```dart
+child: Row(
+  mainAxisSize: MainAxisSize.min,
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    if (widget.isLoading)
+      SizedBox(
+        width: 16,
+        height: 16,
+        child: CircularProgressIndicator(
+          strokeWidth: 2,
+          valueColor: AlwaysStoppedAnimation<Color>(
+            widget.isOutlined
+                ? (widget.backgroundColor ?? Color(0xFF6366F1))
+                : (widget.textColor ?? Colors.white),
+          ),
+        ),
+      )
+    else if (widget.icon != null) ...[
+      Icon(widget.icon, color: iconColor, size: 18),
+      const SizedBox(width: 8),
+    ],
+    if (!widget.isLoading)
+      Text(widget.text, style: textStyle),
+  ],
+),
+```
+
+**Explicación Crítica:**
+- **Estados mutuamente exclusivos**: Loading OR (Icon + Text)
+- **Color dinámico**: El spinner usa colores apropiados según el estilo
+- **Tamaño consistente**: El botón mantiene dimensiones durante loading
+- **Accesibilidad**: AlwaysStoppedAnimation evita parpadeos
+
+**Soporte para Gradientes:**
+```dart
+decoration: BoxDecoration(
+  gradient: widget.gradientColors != null && !widget.isOutlined
+      ? LinearGradient(colors: widget.gradientColors!)
+      : null,
+  color: widget.isOutlined
+      ? Colors.transparent
+      : (widget.gradientColors == null
+          ? (widget.backgroundColor ?? Color(0xFF6366F1))
+          : null),
+```
+
+**Explicación Crítica:**
+- **Precedencia de estilos**: Gradiente > Color sólido > Transparente
+- **Exclusión mutua**: Outlined buttons no tienen gradientes
+- **Fallback colors**: Sistema de colores de respaldo bien definido
+
+### 6.7 SettingsView - Vista de Configuración Avanzada
+
+**Sistema de Pestañas Personalizado:**
+```dart
+class CustomTabBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: Color(0xFFF1F5F9),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        children: tabs.asMap().entries.map((entry) {
+          final isSelected = index == selectedIndex;
+          
+          return Expanded(
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              decoration: BoxDecoration(
+                color: isSelected ? Colors.white : Colors.transparent,
+                boxShadow: isSelected ? [/* sombra */] : null,
+              ),
+```
+
+**Explicación Crítica:**
+- **AnimatedContainer**: Transiciones automáticas entre estados
+- **Diseño responsivo**: Expanded hace que las pestañas ocupen espacio igual
+- **Estados visuales**: Color y sombra cambian según selección
+- **200ms**: Duración estándar para transiciones de UI
+
+**Gestión de Estado de Formularios:**
+```dart
+// Controladores para todos los campos
+final _nameController = TextEditingController();
+final _emailController = TextEditingController();
+final _phoneController = TextEditingController();
+
+// Variables de estado para configuraciones
+bool _notificationsEnabled = true;
+bool _darkModeEnabled = false;
+int _selectedCurrency = 0;
+
+// Lista dinámica para etiquetas
+List<String> _financialGoals = ['Ahorrar para vacaciones', 'Fondo de emergencia'];
+```
+
+**Explicación Crítica:**
+- **Separación de tipos**: TextControllers para texto, variables bool/int para estados
+- **Inicialización con datos**: Valores por defecto realistas
+- **Listas mutables**: Permite agregar/quitar elementos dinámicamente
+- **Tipado fuerte**: Cada variable tiene su tipo específico
+
+---
+
+## 7. UTILIDADES Y FORMATEO
 
 ### 6.1 CurrencyFormatter - Formateo de Moneda
 
@@ -399,9 +730,66 @@ Text(CurrencyFormatter.formatWithSign(amount, isIncome))
 
 ---
 
-## 7. PUNTOS CRÍTICOS PARA ACTUALIZACIONES
+## 8. PUNTOS CRÍTICOS PARA ACTUALIZACIONES
 
-### 7.1 Integración con Persistencia Real
+### 8.0 Nuevas Integraciones en Versión 2.0
+
+**WIDGETS PERSONALIZADOS:**
+- **Ubicación**: `lib/widgets/custom_widgets.dart` y `lib/widgets/custom_text_fields.dart`
+- **Integración**: Reemplazar widgets estándar por personalizados en toda la app
+- **Beneficios**: Consistencia visual, animaciones, mejor UX
+- **Consideración**: Mantener compatibilidad con widgets existentes
+
+**VISTA DE CONFIGURACIÓN:**
+- **Ubicación**: `lib/views/settings_view.dart`
+- **Integración**: Nueva pestaña en HomeView, sistema de navegación ampliado
+- **Funcionalidades**: Gestión de preferencias, configuración financiera, perfil de usuario
+- **Escalabilidad**: Preparada para agregar más configuraciones
+
+**NAVEGACIÓN AMPLIADA:**
+- **Cambio**: De 4 a 5 pestañas en BottomNavigationBar
+- **Impacto**: Requiere ajustes en índices de navegación
+- **Ubicación a modificar**: `home_view.dart` líneas 60-85
+
+### 8.1 Integración de Widgets Personalizados en Nuevas Vistas
+
+**Reemplazar TextFormField por CustomTextField:**
+```dart
+// ANTES
+TextFormField(
+  controller: controller,
+  decoration: InputDecoration(labelText: 'Campo'),
+  validator: validator,
+)
+
+// DESPUÉS  
+CustomTextField(
+  label: 'Campo',
+  controller: controller,
+  validator: validator,
+  prefixIcon: Icons.icon_name,
+  focusedBorderColor: Color(0xFF6366F1),
+)
+```
+
+**Reemplazar ElevatedButton por CustomButton:**
+```dart
+// ANTES
+ElevatedButton(
+  onPressed: onPressed,
+  child: Text('Texto'),
+)
+
+// DESPUÉS
+CustomButton(
+  text: 'Texto',
+  onPressed: onPressed,
+  gradientColors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
+  icon: Icons.save,
+)
+```
+
+### 8.2 Integración con Persistencia Real
 
 **Ubicaciones a Modificar:**
 ```dart
@@ -421,7 +809,7 @@ Future<void> loadInitialData() async {
 - Agregar manejo de errores de red/database
 - Implementar cache local para offline-first
 
-### 7.2 Validaciones de Negocio Mejoradas
+### 8.3 Validaciones de Negocio Mejoradas
 
 **Lugares para Agregar Validaciones:**
 ```dart
@@ -435,7 +823,7 @@ Future<void> addTransaction(Transaction transaction) async {
 }
 ```
 
-### 7.3 Sistema de Notificaciones
+### 8.4 Sistema de Notificaciones
 
 **Punto de Integración en BudgetController:**
 ```dart
@@ -451,7 +839,7 @@ bool isBudgetExceeded(String categoryId, double spentAmount) {
 }
 ```
 
-### 7.4 Exportación de Datos
+### 8.5 Exportación de Datos
 
 **Nuevos Métodos a Agregar:**
 ```dart
@@ -462,9 +850,57 @@ Future<Uint8List> exportToPdf() async { /* implementación */ }
 
 ---
 
-## 8. GUÍA DE MANTENIMIENTO
+## 9. GUÍA DE MANTENIMIENTO
 
-### 8.1 Agregar Nueva Funcionalidad
+### 9.1 Agregar Nueva Funcionalidad con Widgets Personalizados
+
+**Proceso Actualizado:**
+1. **Crear modelo** (si es necesario) con inmutabilidad
+2. **Crear controlador** extendiendo ChangeNotifier  
+3. **Implementar métodos CRUD** con notifyListeners()
+4. **Crear vista usando widgets personalizados** (CustomTextField, CustomButton, etc.)
+5. **Usar AnimatedBuilder** para reactividad
+6. **Integrar en main.dart** con inicialización adecuada
+
+**Template de Vista con Widgets Personalizados:**
+```dart
+class NewView extends StatefulWidget {
+  @override
+  State<NewView> createState() => _NewViewState();
+}
+
+class _NewViewState extends State<NewView> {
+  final _controller = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: [
+            CustomTextField(
+              label: 'Campo personalizado',
+              controller: _controller,
+              prefixIcon: Icons.edit,
+              validator: (value) => value?.isEmpty == true ? 'Requerido' : null,
+            ),
+            SizedBox(height: 20),
+            CustomButton(
+              text: 'Guardar',
+              icon: Icons.save,
+              gradientColors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
+              onPressed: () => _save(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+### 9.2 Agregar Nueva Funcionalidad Original
 
 **Proceso Estándar:**
 1. **Crear modelo** (si es necesario) con inmutabilidad
@@ -473,7 +909,7 @@ Future<Uint8List> exportToPdf() async { /* implementación */ }
 4. **Crear vista** usando AnimatedBuilder
 5. **Integrar en main.dart** con inicialización adecuada
 
-### 8.2 Modificar Controlador Existente
+### 9.3 Modificar Controlador Existente
 
 **Reglas de Compatibilidad:**
 - **NUNCA** cambiar signatures de métodos públicos existentes
@@ -481,7 +917,51 @@ Future<Uint8List> exportToPdf() async { /* implementación */ }
 - **MANTENER** la estructura de getters computados
 - **PRESERVAR** el patrón de notificación con `notifyListeners()`
 
-### 8.3 Testing de Controladores
+### 9.4 Testing de Controladores y Widgets Personalizados
+
+**Testing de Widgets Personalizados:**
+```dart
+void main() {
+  group('CustomTextField Tests', () {
+    testWidgets('should show validation error', (tester) async {
+      final controller = TextEditingController();
+      
+      await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+          body: CustomTextField(
+            label: 'Test',
+            controller: controller,
+            validator: (value) => value?.isEmpty == true ? 'Error' : null,
+          ),
+        ),
+      ));
+      
+      // Trigger validation
+      await tester.enterText(find.byType(CustomTextField), '');
+      await tester.pump();
+      
+      expect(find.text('Error'), findsOneWidget);
+    });
+  });
+  
+  group('CustomButton Tests', () {
+    testWidgets('should show loading state', (tester) async {
+      await tester.pumpWidget(MaterialApp(
+        home: CustomButton(
+          text: 'Test',
+          isLoading: true,
+          onPressed: () {},
+        ),
+      ));
+      
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      expect(find.text('Test'), findsNothing);
+    });
+  });
+}
+```
+
+### 9.5 Testing de Controladores Original
 
 **Estructura de Tests:**
 ```dart
@@ -506,26 +986,47 @@ void main() {
 
 ---
 
-### 8.4 Conclusiones Arquitectónicas
+### 9.6 Conclusiones Arquitectónicas V2.0
 
-#### Ventajas del Diseño Actual:
+#### Ventajas del Diseño Actualizado:
 - **Separación clara** de responsabilidades (MVC)
-- **Estado reactivo** sin complejidad adicional
+- **Estado reactivo** sin complejidad adicional  
 - **Escalabilidad** para nuevas funcionalidades
 - **Testabilidad** de lógica de negocio independiente
+- **⭐ Sistema de widgets personalizados** coherente y reutilizable
+- **⭐ Experiencia de usuario mejorada** con animaciones y feedback visual
+- **⭐ Arquitectura de componentes** escalable y mantenible
+- **⭐ Validación visual en tiempo real** integrada
+
+#### Nuevas Capacidades V2.0:
+- **CustomTextField**: Campos con animaciones y validación visual
+- **CurrencyTextField**: Formateo automático de moneda colombiana  
+- **SearchTextField**: Búsqueda con animaciones y limpieza dinámica
+- **TagTextField**: Sistema de etiquetas interactivo
+- **CustomCard**: Cards con feedback táctil y elevación dinámica
+- **CustomButton**: Botones con gradientes, estados de carga y efectos
+- **SettingsView**: Vista de configuración completa con 3 secciones
+- **Sistema de navegación**: Expandido a 5 pestañas
 
 #### Limitaciones a Considerar:
 - **Persistencia temporal** (solo en memoria)
-- **Sincronización de datos** entre dispositivos
+- **Sincronización de datos** entre dispositivos  
 - **Optimización** para grandes volúmenes de datos
 - **Validaciones robustas** de entrada de usuario
+- **⭐ Personalización avanzada** de widgets (colores/temas dinámicos)
+- **⭐ Exportación de configuraciones** de usuario
 
-#### Evolución Recomendada:
-1. **Capa de persistencia** (SQLite/Hive)
+#### Evolución Recomendada V3.0:
+1. **Capa de persistencia** (SQLite/Hive) 
 2. **Sincronización cloud** (Firebase/API REST)
 3. **Validaciones centralizadas** (validation package)
 4. **Sistema de logging** para debugging
 5. **Performance monitoring** para optimización
+6. **⭐ Sistema de temas dinámicos** (light/dark mode completo)
+7. **⭐ Exportación de datos** (PDF/CSV/Excel)  
+8. **⭐ Notificaciones push** integradas
+9. **⭐ Widget gallery** para documentar componentes personalizados
+10. **⭐ Animaciones avanzadas** (página transitions, micro-interactions)
 
 ---
 
