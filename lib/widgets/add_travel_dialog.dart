@@ -82,9 +82,9 @@ class _AddTravelDialogState extends State<AddTravelDialog> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error al capturar imagen: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error al capturar imagen: $e')));
       }
     }
   }

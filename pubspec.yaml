@@ -51,8 +51,8 @@ dependencies:
   # firebase_core: ^2.24.2
   # firebase_storage: ^11.2.5
   
-  # 📱 Compartir archivos
-  share_plus: ^7.2.1
+  # 📱 Compartir archivos - Deshabilitado temporalmente para APK
+  # share_plus: ^7.2.1
   
   # 🎨 Galería con carrusel
   photo_view: ^0.14.0
