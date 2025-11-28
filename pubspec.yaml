@@ -37,6 +37,26 @@ dependencies:
   
   # Para formateo de moneda en pesos colombianos
   intl: ^0.19.0
+  
+  # 📸 Selección y captura de imágenes
+  image_picker: ^1.0.7
+  
+  # 🖼️ Visualización optimizada de imágenes
+  cached_network_image: ^3.3.1
+  
+  # ✏️ Edición de imágenes
+  image_editor_plus: ^1.0.8
+  
+  # ☁️ Almacenamiento en la nube (Firebase) - Se habilitará en próxima fase
+  # firebase_core: ^2.24.2
+  # firebase_storage: ^11.2.5
+  
+  # 📱 Compartir archivos
+  share_plus: ^7.2.1
+  
+  # 🎨 Galería con carrusel
+  photo_view: ^0.14.0
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:

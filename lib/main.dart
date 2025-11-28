@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'controllers/transaction_controller.dart';
 import 'controllers/category_controller.dart';
 import 'controllers/budget_controller.dart';
+import 'controllers/travel_controller.dart';
 import 'views/home_view.dart';
 
 /// Aplicación Financiera que demuestra el uso de controladores para la administración del estado.
@@ -91,6 +92,7 @@ class _FinancialAppHomeState extends State<FinancialAppHome> {
   late final TransactionController _transactionController;
   late final CategoryController _categoryController;
   late final BudgetController _budgetController;
+  late final TravelController _travelController;
 
   @override
   void initState() {
@@ -102,6 +104,7 @@ class _FinancialAppHomeState extends State<FinancialAppHome> {
     _transactionController = TransactionController();
     _categoryController = CategoryController();
     _budgetController = BudgetController();
+    _travelController = TravelController();
 
     // Cargar datos iniciales
     _loadInitialData();
@@ -112,6 +115,7 @@ class _FinancialAppHomeState extends State<FinancialAppHome> {
     await _categoryController.loadDefaultCategories();
     await _transactionController.loadInitialTransactions();
     await _budgetController.loadInitialBudgets();
+    await _travelController.loadInitialData();
   }
 
   @override
@@ -121,6 +125,7 @@ class _FinancialAppHomeState extends State<FinancialAppHome> {
     _transactionController.dispose();
     _categoryController.dispose();
     _budgetController.dispose();
+    _travelController.dispose();
     super.dispose();
   }
 
@@ -133,6 +138,7 @@ class _FinancialAppHomeState extends State<FinancialAppHome> {
       transactionController: _transactionController,
       categoryController: _categoryController,
       budgetController: _budgetController,
+      travelController: _travelController,
     );
   }
 }

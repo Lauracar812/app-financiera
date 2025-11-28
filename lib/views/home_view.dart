@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import '../controllers/transaction_controller.dart';
 import '../controllers/category_controller.dart';
 import '../controllers/budget_controller.dart';
+import '../controllers/travel_controller.dart';
 import 'transactions_view.dart';
 import 'budgets_view.dart';
 import 'reports_view.dart';
+import 'travels_view.dart';
 import '../widgets/add_transaction_dialog.dart';
 import '../utils/currency_formatter.dart';
 
@@ -14,12 +16,14 @@ class HomeView extends StatefulWidget {
   final TransactionController transactionController;
   final CategoryController categoryController;
   final BudgetController budgetController;
+  final TravelController travelController;
 
   const HomeView({
     super.key,
     required this.transactionController,
     required this.categoryController,
     required this.budgetController,
+    required this.travelController,
   });
 
   @override
@@ -62,6 +66,7 @@ class _HomeViewState extends State<HomeView> {
                 budgetController: widget.budgetController,
                 categoryController: widget.categoryController,
               ),
+              TravelsView(travelController: widget.travelController),
               ReportsView(
                 transactionController: widget.transactionController,
                 categoryController: widget.categoryController,
@@ -151,6 +156,11 @@ class _HomeViewState extends State<HomeView> {
               icon: Icon(Icons.savings_outlined),
               activeIcon: Icon(Icons.savings),
               label: 'Presupuestos',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.flight_takeoff_outlined),
+              activeIcon: Icon(Icons.flight_takeoff),
+              label: 'Viajes',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.analytics_outlined),
